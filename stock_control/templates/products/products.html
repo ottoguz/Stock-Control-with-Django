@@ -42,8 +42,8 @@
                 {% else %}
                     <td>Out of Stock</td>
                 {% endif %}
-                <td><a class="px-4 btn btn--pill btn-warning" href="/edit_customer/{{product.id}}">Edit</a></td>
-                <td><a class="px-3 btn btn--pill btn-danger" href="/remove_customer/{{product.id}}">Delete</a></td>
+                <td><a class="px-4 btn btn--pill btn-warning" href="/edit_product/{{product.id}}">Edit</a></td>
+                <td><a class="px-3 btn btn--pill btn-danger" href="/remove_product/{{product.id}}">Delete</a></td>
             </tr>
             {% endfor %}
         </tbody>

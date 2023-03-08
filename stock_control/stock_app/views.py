@@ -124,6 +124,28 @@ def add_products(request):
         return redirect("products")
     return render(request, "products/add_products.html", {"form": form})
 
+def edit_products(request, id=None):
+    product = get_object_or_404(Products, id=id)
+    form = ProductsForm(request.POST or None, instance=product)
+    if form.is_valid():
+        obj = form.save()
+        obj.save()
+        messages.success(request, f"Product: {obj.name} edited successfully!")
+        return redirect("products")
+    return render(request, "products/edit_product.html", {"form": form})
+
+
+def remove_products(request, id=None):
+    product = get_object_or_404(Products, id=id)
+    if request.method == "POST":
+        messages.success(request, f"Product: {product.name} removed successfully!")
+        product.delete()
+        return redirect("products")
+    return render(request, "products/remove_product.html", {"product": product})
+
+
+
+
 
        
         
