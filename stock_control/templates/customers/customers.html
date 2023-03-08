@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Stock Control - Customers{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="py-4"></div>
+        <form method="GET">
+            <div class="row">
+                <div class="form-group col-11" id="message">
+                    <input class="form-control" type="search" placeholder="Inform customer name, phone or cpf" name="q" value="{{request.GET.q}}">
+                </div>
+                <div class="form-group col-1 d-grid">
+                    <button class="btn btn--pill btn--green px-2 mx-0">Search</button>
+                </div>
+            </div>
+        </form>  
+        <div class="row">
+            <div class="d-grid gap-2">
+                <a class="mt-3 btn btn--pill btn-primary" href="{% url 'add_customers' %}">Add a new customer</a>
+            </div>
+        </div>
+        <table class="table table-head">
+            <thead>
+                <tr class="text-white">
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Cpf</th>
+                    <th>Creation date</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr style="color: #fff;">
+                    <td>{{customer.name}}</td>
+                    <td>{{customer.email}}</td>
+                    <td>{{customer.phone}}</td>
+                    <td>{{customer.cpf}}</td>
+                    <td>{{customer.creation_date|date:"m/d/Y"}}</td>
+                    <td><a class="px-4 btn btn--pill btn-warning" href="/edit_customer/{{customer.id}}">Edit</a></td>
+                    <td><a class="px-3 btn btn--pill btn-danger" href="/remove_customer/{{customer.id}}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagination">
+            <span class="step-links">
+                {% if customers.has_previous %}
+                    <a href="?page=1"><i class="h4 text-dark fa-solid fa-angles-left"></i></a>
+                    <a href="?page={{ customers.previous_page_number }}&q={% if request.GET.q%}{{ request.GET.q }}{% endif %}"><i class="h4 text-dark fa-solid fa-circle-chevron-left"></i></a>
+                {% endif %}
+                <div class="d-inline-flex bd-highlight">
+                    <span class="h6 current">
+                        Page {{ customers.number }} of {{ customers.paginator.num_pages }}.
+                    </span>    
+                </div>
+                    
+                {% if customers.has_next %}
+                    <a href="?page={{ customers.next_page_number }}"><i class="h4 text-dark fa-solid fa-circle-chevron-right"></i></a>
+                    <a href="?page={{ customers.paginator.num_pages }}&q={% if request.GET.q%}{{ request.GET.q }}{% endif %}"><i class="h4 text-dark fa-solid fa-angles-right"></i></a>
+                {% endif %}
+            </span>
+        </div>
+    </div>    
+{% endblock content %}

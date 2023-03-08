@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Stock Control - Edit a Customer{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <p class="text-white fs-1 fw-normal">Edit a Customer</p>
+        <form action="" method="post"> {% csrf_token %}
+            {{ form|crispy }}
+            <br>
+            <input class="btn btn--pill btn-primary" type="submit" name="" value="Send">
+        </form>
+
+    </div>
+{% endblock content %}
