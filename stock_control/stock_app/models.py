@@ -15,7 +15,10 @@ class Products(models.Model):
         COMP_PARTS = "Computer Parts"
         FURNITURE = "Furniture"
 
-    status = models.BooleanField(default=False, verbose_name="Available")
+    status = models.BooleanField(default=False, verbose_name=f"Status: Out of Stock / Available")
     name = models.CharField(max_length=250, null=False)
     category = models.CharField(max_length=50, choices=Categories.choices)
     creation_date = models.DateField(auto_now_add=True)
+
+
+    #rkezutlfugjdknoq

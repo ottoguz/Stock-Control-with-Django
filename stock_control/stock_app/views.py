@@ -7,11 +7,39 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.http import HttpResponse
 
+import smtplib
+import email.message
+
+def send_email( username, to_email):
+    email_body = f"""
+                    <p>Dear <b>{username}</b>,
+
+                    Welcome to Stock Control</p> 
+                  """
+    pass_email = "pass"
+    from_email = "softwaretest1987@gmail.com"
+    msg = email.message.Message()
+    msg["Subject"] = "Welcome to Stock Control"
+    msg["From"] = from_email
+    msg["To"] = to_email
+    password = pass_email
+    msg.add_header("Content-Type", "text/html")
+    msg.set_payload(email_body)
+
+    s = smtplib.SMTP("smtp.gmail.com: 587")
+    s.starttls()
+    # Login Credentials for sending the email
+    s.login(from_email, pass_email)
+    s.sendmail(from_email, to_email, msg.as_string().encode("utf-8"))
+
+
+
+    
 
 
 # Create your views here.
+
 def home(request):
     if request.user.is_authenticated:
         return render(request, "home.html")
@@ -32,6 +60,7 @@ def signup(request):
             my_user.save()
             my_user.clean_fields()
             messages.success(request, f"User: {my_user.username} successfully created")
+            send_email(username, email)
             return redirect("login")
     return render(request, "signup.html")
 

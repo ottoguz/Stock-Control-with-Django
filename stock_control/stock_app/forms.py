@@ -12,7 +12,7 @@ class CustomerForm(forms.ModelForm):
             "name":forms.TextInput(attrs={"placeholder":"Inform customer name"}),
             "email":forms.TextInput(attrs={"placeholder":"Inform customer email"}),
             "phone":forms.TextInput(attrs={"placeholder":"Inform customer phone"}),
-            "cpf":forms.TextInput(attrs={"placeholder":"Inform customer cpf"})
+            "cpf":forms.TextInput(attrs={"placeholder":"Inform customer cpf", "id":"cpf"})
         }
 
 class ProductsForm(forms.ModelForm):
