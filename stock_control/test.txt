@@ -95,3 +95,29 @@ def auth_logout(request):
     logout(request)
     messages.info(request, "You have logged out successfully")
     return redirect("login")
+
+
+    ############################################################
+
+    email_body = f"""
+                <div style="background-color: #000;
+                            height: 300px;
+                            width: 500px";
+                            border-radius: 25px;>
+                    <p style="color: #fff;">Dear <b>{username}</b><br>Welcome to Stock Control</p>
+                </div> 
+                """
+    pass_email = "tvmvrnkhkokyrfcz"
+    from_email = "softwaretest1987@gmail.com"
+    msg = email.message.Message()
+    msg["Subject"] = "Welcome to Stock Control"
+    msg["From"] = from_email
+    msg["To"] = to_email
+    msg.add_header("Content-Type", "text/html")
+    msg.set_payload(email_body)
+
+    s = smtplib.SMTP("smtp.gmail.com: 587")
+    s.starttls()
+    # Login Credentials for sending the email
+    s.login(from_email, pass_email)
+    s.sendmail(from_email, to_email, msg.as_string().encode("utf-8"))

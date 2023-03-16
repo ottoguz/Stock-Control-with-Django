@@ -11,19 +11,25 @@ from django.core.paginator import Paginator
 import smtplib
 import email.message
 
+
 def send_email( username, to_email):
     email_body = f"""
-                    <p>Dear <b>{username}</b>,
-
-                    Welcome to Stock Control</p> 
-                  """
-    pass_email = "pass"
+                <div style="background-color: #000; height: 260px; width: 500px; border-radius: 5px; display:flex;">
+                    <div>
+                        <img style=" border-radius: 5px 0px 0px 5px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLBTKN85kf359hydWdFGkvXBnrJvmqdGrVbQ&usqp=CAU">
+                    </div>
+                    <div style="margin:auto;">
+                        <p style="color: #fff; text-align: center; font-size: 20px;">Dear <b>{username}</b>,<br>Welcome to Stock Control.<br> User Created Successfully</p>
+                        <a style="text-align: center; font-size: 20px; margin-left: 26px" href="http://127.0.0.1:8000/">Redirect to Login</a>
+                    </div>
+                </div> 
+                """
+    pass_email = ""
     from_email = "softwaretest1987@gmail.com"
     msg = email.message.Message()
     msg["Subject"] = "Welcome to Stock Control"
     msg["From"] = from_email
     msg["To"] = to_email
-    password = pass_email
     msg.add_header("Content-Type", "text/html")
     msg.set_payload(email_body)
 
