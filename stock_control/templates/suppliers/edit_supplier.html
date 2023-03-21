@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% load crispy_forms_filters %}
-{% block title %}Stock Control - Edit a Customer{% endblock title %}
+{% block title %}Stock Control - Edit a Supplier{% endblock title %}
 
 {% block content %}
 <div class="py-4 container">
-    <p class="mx-3 text-white fs-1 fw-normal">Edit a Customer</p>
+    <p class="mx-3 text-white fs-1 fw-normal">Edit a Supplier</p>
     <form class="text-white" action="" method="post"> {% csrf_token %}
         <div class="form-check form-switch">
         {{ form|crispy }}

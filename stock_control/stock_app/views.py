@@ -176,6 +176,13 @@ def remove_products(request, id=None):
 
 def suppliers(request):
     suppliers = Suppliers.objects.all().order_by('-id')
+    queryset = request.GET.get('q')
+    if queryset:
+        suppliers = Suppliers.objects.filter(
+            Q(trading_name__icontains=queryset)|
+            Q(company_name__icontains=queryset)|
+            Q(cnpj__icontains=queryset)
+        )
     paginator = Paginator(suppliers, 5)
     page = request.GET.get('page')
     suppliers = paginator.get_page(page)
@@ -191,5 +198,25 @@ def add_suppliers(request):
         return redirect("suppliers")
     return render(request, "suppliers/add_suppliers.html", {"form": form})
 
+def edit_supplier(request, id=None):
+    supplier = get_object_or_404(Suppliers, id=id)
+    form = SuppliersForm(request.POST or None, instance=supplier)
+    if form.is_valid():
+        obj = form.save()
+        obj.save()
+        messages.success(request, f"Supplier: {obj.trading_name} edited successfully!")
+        return redirect("suppliers")
+    return render(request, "suppliers/edit_supplier.html", {"form": form})
+
         
+def edit_products(request, id=None):
+    product = get_object_or_404(Products, id=id)
+    form = ProductsForm(request.POST or None, instance=product)
+    if form.is_valid():
+        obj = form.save()
+        obj.save()
+        messages.success(request, f"Product: {obj.name} edited successfully!")
+        return redirect("products")
+    return render(request, "products/edit_product.html", {"form": form})
+
 
