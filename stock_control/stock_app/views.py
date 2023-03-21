@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Customers, Products
-from .forms import CustomerForm, ProductsForm
+from .models import Customers, Products, Suppliers
+from .forms import CustomerForm, ProductsForm, SuppliersForm
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -175,9 +175,18 @@ def remove_products(request, id=None):
 
 
 def suppliers(request):
-    return render(request, "suppliers/suppliers.html")
+    suppliers = Suppliers.objects.all().order_by('-id')
+    return render(request, "suppliers/suppliers.html", {"suppliers": suppliers})
 
+def add_suppliers(request):
+    form = SuppliersForm(request.POST)
+    if form.is_valid():
+        obj = form.save()
+        obj.save()
+        form = SuppliersForm()
+        messages.success(request, f"Company: {obj.trading_name} successfully included")
+        return redirect("suppliers")
+    return render(request, "suppliers/add_suppliers.html", {"form": form})
 
-       
         
 
