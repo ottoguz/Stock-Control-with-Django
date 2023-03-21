@@ -19,12 +19,12 @@ def send_email( username, to_email):
                         <img style=" border-radius: 5px 0px 0px 5px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLBTKN85kf359hydWdFGkvXBnrJvmqdGrVbQ&usqp=CAU">
                     </div>
                     <div style="margin:auto;">
-                        <p style="color: #fff; text-align: center; font-size: 20px;">Dear <b>{username}</b>,<br>Welcome to Stock Control.<br> User Created Successfully</p>
-                        <a style="text-align: center; font-size: 20px; margin-left: 26px" href="http://127.0.0.1:8000/">Redirect to Login</a>
+                        <p style="color: #fff; text-align: center; font-size: 20px;">Welcome to Stock Control<br><b>{username}</b><br>User Created Successfully</p>
+                        <a style="text-align: center; font-size: 20px; margin-left: 38px" href="http://127.0.0.1:8000/">Redirect to Login</a>
                     </div>
                 </div> 
                 """
-    pass_email = ""
+    pass_email = "tvmvrnkhkokyrfcz"
     from_email = "softwaretest1987@gmail.com"
     msg = email.message.Message()
     msg["Subject"] = "Welcome to Stock Control"
