@@ -21,7 +21,7 @@ class Products(models.Model):
     creation_date = models.DateField(auto_now_add=True)
 
 class Suppliers(models.Model):
-    status = models.BooleanField(default=False, verbose_name=f"Status: Innactive / Active")
+    status = models.BooleanField(default=False, verbose_name=f"Status: Inactive / Active")
     trading_name = models.CharField(max_length=250, null=False)
     company_name = models.CharField(max_length=250, null=False)
     cnpj = models.CharField(max_length=18, unique=True, null=False)
