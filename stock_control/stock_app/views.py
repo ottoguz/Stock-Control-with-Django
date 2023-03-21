@@ -39,11 +39,6 @@ def send_email( username, to_email):
     s.login(from_email, pass_email)
     s.sendmail(from_email, to_email, msg.as_string().encode("utf-8"))
 
-
-
-    
-
-
 # Create your views here.
 
 def home(request):
@@ -179,7 +174,8 @@ def remove_products(request, id=None):
     return render(request, "products/remove_product.html", {"product": product})
 
 
-
+def suppliers(request):
+    return render(request, "suppliers/suppliers.html")
 
 
        

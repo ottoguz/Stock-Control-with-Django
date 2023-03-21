@@ -20,5 +20,3 @@ class Products(models.Model):
     category = models.CharField(max_length=50, choices=Categories.choices)
     creation_date = models.DateField(auto_now_add=True)
 
-
-    #rkezutlfugjdknoq

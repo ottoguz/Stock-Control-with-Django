@@ -21,4 +21,3 @@ class ProductsForm(forms.ModelForm):
         fields = ["status", "name", "category"]
         
         
-    
