@@ -176,6 +176,9 @@ def remove_products(request, id=None):
 
 def suppliers(request):
     suppliers = Suppliers.objects.all().order_by('-id')
+    paginator = Paginator(suppliers, 5)
+    page = request.GET.get('page')
+    suppliers = paginator.get_page(page)
     return render(request, "suppliers/suppliers.html", {"suppliers": suppliers})
 
 def add_suppliers(request):
