@@ -1,5 +1,5 @@
 from django import forms
-from .models import Customers, Products
+from .models import Customers, Products, Suppliers
 
 
 
@@ -21,3 +21,14 @@ class ProductsForm(forms.ModelForm):
         fields = ["status", "name", "category"]
         
         
+class SuppliersForm(forms.ModelForm):
+    class Meta:
+        model = Suppliers
+        fields = ["status", "trading_name", "company_name", "cnpj", "phone", "email"]
+        widgets = {
+            "trading_name":forms.TextInput(attrs={"placeholder":"Inform trading name"}),
+            "company_name":forms.TextInput(attrs={"placeholder":"Inform company name"}),
+            "cnpj":forms.TextInput(attrs={"placeholder":"Inform company cnpj"}),
+            "phone":forms.TextInput(attrs={"placeholder":"Inform comapny phone"}),
+            "email":forms.TextInput(attrs={"placeholder":"Inform company email address"})
+        }
