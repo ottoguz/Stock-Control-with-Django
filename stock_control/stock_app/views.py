@@ -43,7 +43,7 @@ def send_email( username, to_email):
 
 def home(request):
     if request.user.is_authenticated:
-        return render(request, "home.html")
+        return render(request, "auth/home.html")
     else:
         messages.error(request, "You must be logged in to grant access to Stock Control")
         return redirect("login")
@@ -63,7 +63,7 @@ def signup(request):
             messages.success(request, f"User: {my_user.username} successfully created")
             send_email(username, email)
             return redirect("login")
-    return render(request, "signup.html")
+    return render(request, "auth/signup.html")
 
 def auth_login(request):
     if request.method == "POST":
@@ -76,7 +76,7 @@ def auth_login(request):
             return redirect("home")
         else:
             messages.error(request, "Username or password incorrect")
-    return render(request, "login.html")
+    return render(request, "auth/login.html")
 
 @login_required
 def auth_logout(request):
@@ -194,7 +194,7 @@ def add_suppliers(request):
         obj = form.save()
         obj.save()
         form = SuppliersForm()
-        messages.success(request, f"Company: {obj.trading_name} successfully included")
+        messages.success(request, f"Company: {obj.company_name} successfully included")
         return redirect("suppliers")
     return render(request, "suppliers/add_suppliers.html", {"form": form})
 
@@ -204,7 +204,7 @@ def edit_supplier(request, id=None):
     if form.is_valid():
         obj = form.save()
         obj.save()
-        messages.success(request, f"Supplier: {obj.trading_name} edited successfully!")
+        messages.success(request, f"Supplier: {obj.company_name} edited successfully!")
         return redirect("suppliers")
     return render(request, "suppliers/edit_supplier.html", {"form": form})
 
