@@ -215,3 +215,6 @@ def remove_supplier(request, id=None):
         supplier.delete()
         return redirect("suppliers")
     return render(request, "suppliers/remove_supplier.html", {"supplier": supplier})
+
+def entry_notes(request):
+    return render(request, "notes/entry_notes.html")
