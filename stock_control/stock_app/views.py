@@ -208,15 +208,10 @@ def edit_supplier(request, id=None):
         return redirect("suppliers")
     return render(request, "suppliers/edit_supplier.html", {"form": form})
 
-        
-def edit_products(request, id=None):
-    product = get_object_or_404(Products, id=id)
-    form = ProductsForm(request.POST or None, instance=product)
-    if form.is_valid():
-        obj = form.save()
-        obj.save()
-        messages.success(request, f"Product: {obj.name} edited successfully!")
-        return redirect("products")
-    return render(request, "products/edit_product.html", {"form": form})
-
-
+def remove_supplier(request, id=None):
+    supplier = get_object_or_404(Suppliers, id=id)
+    if request.method == "POST":
+        messages.success(request, f"Supplier: {supplier.company_name} removed successfully!")
+        supplier.delete()
+        return redirect("suppliers")
+    return render(request, "suppliers/remove_supplier.html", {"supplier": supplier})
