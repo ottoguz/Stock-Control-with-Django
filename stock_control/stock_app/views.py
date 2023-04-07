@@ -27,7 +27,7 @@ def send_email( username, to_email):
                     </div>
                 </div> 
                 """
-    pass_email = "tvmvrnkhkokyrfcz"
+    pass_email = ""
     from_email = "softwaretest1987@gmail.com"
     msg = email.message.Message()
     msg["Subject"] = "Welcome to Stock Control"
