@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Customers(models.Model):
     name = models.CharField(max_length=250, null=False)
@@ -29,8 +30,9 @@ class Suppliers(models.Model):
     email = models.EmailField(default="")
 
 class Entry_notes(models.Model):
-    class Categories(models.TextChoices):
-        SUPPLIERS = Suppliers.company_name
-    supplier = models.CharField(max_length=50, choices=Categories.choices)
+    class Choices(models.TextChoices):
+    
+        CHOICES = Suppliers.objects.filter().values("company_name")
+    supplier = models.CharField(max_length=500, choices=Choices.choices)
     date_time = models.DateTimeField(auto_now_add=False)
     value = models.FloatField(default=0.0)

@@ -1,7 +1,5 @@
 from django import forms
-from .models import Customers, Products, Suppliers
-
-
+from .models import Customers, Products, Suppliers, Entry_notes
 
 
 class CustomerForm(forms.ModelForm):
@@ -32,3 +30,11 @@ class SuppliersForm(forms.ModelForm):
             "phone":forms.TextInput(attrs={"placeholder":"Inform comapny phone"}),
             "email":forms.TextInput(attrs={"placeholder":"Inform company email address"})
         }
+
+class Entry_notesForm(forms.ModelForm):
+    class Meta:
+        model = Entry_notes
+        fields = ["supplier", "date_time", "value"]
+    
+
+    

@@ -1,6 +1,7 @@
+# Imports for the views
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Customers, Products, Suppliers
-from .forms import CustomerForm, ProductsForm, SuppliersForm
+from .models import Customers, Products, Suppliers, Entry_notes
+from .forms import CustomerForm, ProductsForm, SuppliersForm, Entry_notesForm
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -8,10 +9,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
+#Imports to create send_email()
 import smtplib
 import email.message
 
 
+# Function which sends a welcome card to the new user's email when he signs up
 def send_email( username, to_email):
     email_body = f"""
                 <div style="background-color: #000; height: 260px; width: 500px; border-radius: 5px; display:flex;">
@@ -24,7 +27,7 @@ def send_email( username, to_email):
                     </div>
                 </div> 
                 """
-    pass_email = ""
+    pass_email = "tvmvrnkhkokyrfcz"
     from_email = "softwaretest1987@gmail.com"
     msg = email.message.Message()
     msg["Subject"] = "Welcome to Stock Control"
@@ -39,15 +42,19 @@ def send_email( username, to_email):
     s.login(from_email, pass_email)
     s.sendmail(from_email, to_email, msg.as_string().encode("utf-8"))
 
+
 # Create your views here.
 
+# View for the home page after login (to be developed)
 def home(request):
     if request.user.is_authenticated:
         return render(request, "auth/home.html")
     else:
         messages.error(request, "You must be logged in to grant access to Stock Control")
         return redirect("login")
+    
 
+#View for the signup template
 def signup(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -65,6 +72,7 @@ def signup(request):
             return redirect("login")
     return render(request, "auth/signup.html")
 
+# view for the login template
 def auth_login(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -78,12 +86,15 @@ def auth_login(request):
             messages.error(request, "Username or password incorrect")
     return render(request, "auth/login.html")
 
+
+# Logout function
 @login_required
 def auth_logout(request):
     logout(request)
     messages.info(request, "You have logged out successfully")
     return redirect("login")
 
+# View to show all the customers' data stored in the database
 def customers(request):
     customers = Customers.objects.all().order_by('-id')
     queryset = request.GET.get('q')
@@ -99,7 +110,7 @@ def customers(request):
     customers = paginator.get_page(page)
     return render(request, "customers/customers.html", {"customers": customers})
 
-
+# View to create a new customer and include it in the database
 def add_customers(request):
     form = CustomerForm(request.POST)
     if form.is_valid():
@@ -110,7 +121,7 @@ def add_customers(request):
         return redirect("customers")
     return render(request, "customers/add_customers.html", {"form": form})
 
-
+# View to edit an already existng customer
 def edit_customers(request, id=None):
     customer = get_object_or_404(Customers, id=id)
     form = CustomerForm(request.POST or None, instance=customer)
@@ -121,7 +132,7 @@ def edit_customers(request, id=None):
         return redirect("customers")
     return render(request, 'customers/edit_customer.html', {"form": form})
 
-
+# View to remove a customer
 def remove_customers(request, id=None):
     customer = get_object_or_404(Customers, id=id)
     if request.method == "POST":
@@ -130,6 +141,7 @@ def remove_customers(request, id=None):
         return redirect("customers")
     return render(request, "customers/remove_customer.html", {"customer": customer})
 
+# View to show all the products' data stored in the database
 def products(request):
     products = Products.objects.all().order_by('-id')
     queryset = request.GET.get('q')
@@ -144,6 +156,7 @@ def products(request):
     products = paginator.get_page(page)
     return render(request, "products/products.html", {"products": products})
 
+# View to create a new product and include it in the database
 def add_products(request):
     form = ProductsForm(request.POST)
     if form.is_valid():
@@ -154,6 +167,7 @@ def add_products(request):
         return redirect("products")
     return render(request, "products/add_products.html", {"form": form})
 
+# View to edit an already existng product
 def edit_products(request, id=None):
     product = get_object_or_404(Products, id=id)
     form = ProductsForm(request.POST or None, instance=product)
@@ -164,7 +178,7 @@ def edit_products(request, id=None):
         return redirect("products")
     return render(request, "products/edit_product.html", {"form": form})
 
-
+# View to remove a customer
 def remove_products(request, id=None):
     product = get_object_or_404(Products, id=id)
     if request.method == "POST":
@@ -173,7 +187,7 @@ def remove_products(request, id=None):
         return redirect("products")
     return render(request, "products/remove_product.html", {"product": product})
 
-
+# View to show all the suppliers' data stored in the database
 def suppliers(request):
     suppliers = Suppliers.objects.all().order_by('-id')
     queryset = request.GET.get('q')
@@ -188,6 +202,7 @@ def suppliers(request):
     suppliers = paginator.get_page(page)
     return render(request, "suppliers/suppliers.html", {"suppliers": suppliers})
 
+# View to create a new supplier and include it in the database
 def add_suppliers(request):
     form = SuppliersForm(request.POST)
     if form.is_valid():
@@ -197,7 +212,8 @@ def add_suppliers(request):
         messages.success(request, f"Company: {obj.company_name} successfully included")
         return redirect("suppliers")
     return render(request, "suppliers/add_suppliers.html", {"form": form})
-
+    
+# View to edit an already existng supplier
 def edit_supplier(request, id=None):
     supplier = get_object_or_404(Suppliers, id=id)
     form = SuppliersForm(request.POST or None, instance=supplier)
@@ -205,9 +221,11 @@ def edit_supplier(request, id=None):
         obj = form.save()
         obj.save()
         messages.success(request, f"Supplier: {obj.company_name} edited successfully!")
+        print()
         return redirect("suppliers")
     return render(request, "suppliers/edit_supplier.html", {"form": form})
 
+# View to remove a supplier
 def remove_supplier(request, id=None):
     supplier = get_object_or_404(Suppliers, id=id)
     if request.method == "POST":
@@ -216,5 +234,27 @@ def remove_supplier(request, id=None):
         return redirect("suppliers")
     return render(request, "suppliers/remove_supplier.html", {"supplier": supplier})
 
+# View to show all the entry notes generated (needs refactoring)
 def entry_notes(request):
-    return render(request, "notes/entry_notes.html")
+    entry_notes = Entry_notes.objects.all().order_by('-id')
+    queryset = request.GET.get('q')
+    if queryset:
+        customers = Entry_notes.objects.filter(
+            Q(supplier__icontains=queryset))
+    paginator = Paginator(entry_notes, 5)
+    page = request.GET.get('page')
+    customers = paginator.get_page(page)
+    return render(request, "notes/entry_notes.html", {"entry_notes": entry_notes})
+
+#View to include a new entry note (needs refactoring)
+def add_entry_notes(request):
+    form = Entry_notesForm(request.POST)
+    if form.is_valid():
+        obj = form.save()
+        obj.save()
+        form = Entry_notesForm()
+        messages.success(request, f"Entry note: #{obj.id} successfully included")
+        return redirect("entry_notes")
+    return render(request, "notes/add_entry_notes.html", {"form": form})
+
+

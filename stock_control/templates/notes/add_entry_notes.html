@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% load crispy_forms_filters %}
-{% block title %}Stock Control - Add Products{% endblock title %}
+{% block title %}Stock Control - Include Entry Notes{% endblock title %}
 
 {% block content %}
 <div class="py-4 container">
-    <p class="mx-3 text-white fs-1 fw-normal">Add a Product</p>
-    <!--Form from forms.py (ProductsForm)-->
+    <p class="mx-3 text-white fs-1 fw-normal">Include an Entry Note</p>
     <form class="text-white" action="" method="post"> {% csrf_token %}
-        <div class="form-check form-switch">
+        <div style="justify-content: space-between;" class="form-check form-switch d-flex">
         {{ form|crispy }}
+
         </div>
         <br>
         <input class="btn btn--pill btn-primary" style="width: 1265px; margin-left: 32px;" type="submit" name="" value="Send">

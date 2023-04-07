@@ -6,6 +6,7 @@
 {% block content %}
 <div class="py-4 container">
     <p class="mx-3 text-white fs-1 fw-normal">Include a Supplier</p>
+     <!--Form from forms.py (SuppliersForm)-->
     <form class="text-white" action="" method="post"> {% csrf_token %}
         <div class="form-check form-switch">
         {{ form|crispy }}

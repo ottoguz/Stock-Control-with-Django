@@ -8,6 +8,7 @@
     <div class="container">
         <p class="text-white text-center fs-2 fw-normal">Are you sure you would like to remove the customer: {{customer.name}}?</p>
         <form action="" method="post"> {% csrf_token %}
+            <!--buttons to remove customer or return to customers.html-->>
             <div class="mt-4 text-center">
                 <input class="btn btn--pill btn-danger" type="submit" value="Remove">
                 <a class="btn btn--pill btn-warning" href="{% url 'customers' %}">Return</a>
