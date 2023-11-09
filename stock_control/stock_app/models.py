@@ -31,8 +31,7 @@ class Suppliers(models.Model):
 
 class Entry_notes(models.Model):
     class Choices(models.TextChoices):
-    
-        CHOICES = Suppliers.objects.filter().values("company_name")
+        CHOICE = "AAAAAA"
     supplier = models.CharField(max_length=500, choices=Choices.choices)
     date_time = models.DateTimeField(auto_now_add=False)
     value = models.FloatField(default=0.0)

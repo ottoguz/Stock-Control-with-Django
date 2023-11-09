@@ -6,14 +6,31 @@
 {% block content %}
 <div class="py-4 container">
     <p class="mx-3 text-white fs-1 fw-normal">Include an Entry Note</p>
-    <form class="text-white" action="" method="post"> {% csrf_token %}
+    <form action="" method="post"> {% csrf_token %}
         <div style="justify-content: space-between;" class="form-check form-switch d-flex">
-        {{ form|crispy }}
-
+            <div class="input-group">
+                <div class="rs-select2 js-select-simple select--no-search">
+                    <select name="supplier">
+                        <option disabled="disabled" selected="selected">Choose a supplier</option>
+                        {% for entry in entries %}
+                            <option class="company_name" value="{{entry.supplier}}">{{entry.supplier}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="select-dropdown"></div>
+                </div>
+            </div>
+            <div class="input-group">
+                <input class="input--style-3 js-datepicker" type="text" placeholder="Date" name="date">
+                <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+            </div>
+            <div class="input-group">
+                <input class="input--style-3" type="number" placeholder="Value" name="value">
+            </div>
         </div>
         <br>
         <input class="btn btn--pill btn-primary" style="width: 1265px; margin-left: 32px;" type="submit" name="" value="Send">
     </form>
-
+    {{entry.supplier}}
 </div>
+
 {% endblock content %}

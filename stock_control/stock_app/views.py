@@ -27,7 +27,7 @@ def send_email( username, to_email):
                     </div>
                 </div> 
                 """
-    pass_email = ""
+    pass_email = "tvmvrnkhkokyrfcz"
     from_email = "softwaretest1987@gmail.com"
     msg = email.message.Message()
     msg["Subject"] = "Welcome to Stock Control"
@@ -248,13 +248,26 @@ def entry_notes(request):
 
 #View to include a new entry note (needs refactoring)
 def add_entry_notes(request):
-    form = Entry_notesForm(request.POST)
-    if form.is_valid():
-        obj = form.save()
-        obj.save()
-        form = Entry_notesForm()
-        messages.success(request, f"Entry note: #{obj.id} successfully included")
-        return redirect("entry_notes")
-    return render(request, "notes/add_entry_notes.html", {"form": form})
+    entries = Entry_notes.objects.all().order_by('-id')
+   
+    return render(request, "notes/add_entry_notes.html", {"entry": entries})
 
 
+"""
+ if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        confpass = request.POST.get("confpass")
+        if password != confpass:
+            messages.error(request, "Your password and confirmation do not match")
+        else:
+            my_user = User.objects.create_user(username, email, password)
+            my_user.save()
+            my_user.clean_fields()
+            messages.success(request, f"User: {my_user.username} successfully created")
+            send_email(username, email)
+            return redirect("login")
+    return render(request, "auth/signup.html")
+
+"""

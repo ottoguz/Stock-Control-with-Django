@@ -103,6 +103,20 @@
             });				
             }, 3000);			
         });
+
+        function showpass () {
+            const password = document.querySelector('.showpass');
+            const eye = document.querySelector('.eye');
+            if (password.getAttribute('type') == 'password') {
+                password.setAttribute('type', 'text');   
+                eye.setAttribute('class', 'eye fa-solid fa-eye')         
+            } else {
+                password.setAttribute('type', 'password');
+                eye.setAttribute('class', 'eye fa-solid fa-eye-slash');
+            }
+        }
+
+        document.querySelector('.company').style.width = '200px'; 
     </script>
 
     <!--Fontawesome icons-->
